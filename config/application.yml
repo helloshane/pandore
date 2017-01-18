@@ -1,0 +1,13 @@
+REDIS_HOST: localhost
+REDIS_PORT: '6379'
+REDIS_PASSWORD: ''
+REDIS_DB: '0'
+
+development:
+
+test:
+  REDIS_DB: '1'
+
+production:
+  REDIS_DB: '2'
+
