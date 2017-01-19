@@ -12,15 +12,16 @@ gem 'redis', '3.3.2'
 gem 'redis-objects', '~> 1.2.1'
 gem 'unicorn', '~> 5.2.0'
 
+gem 'aasm'
 gem 'enum_help'
 gem 'figaro'
-gem 'paper_trail'
 gem 'paranoia'
 gem 'scatter_swap'
 
 gem 'grape', '~> 0.19.1'
 gem 'grape-entity'
 gem 'grape-swagger'
+gem 'grape-swagger-rails'
 
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
@@ -33,6 +34,7 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -53,7 +55,6 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
   gem 'simplecov', require: false
 end
 
