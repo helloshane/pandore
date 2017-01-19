@@ -4,7 +4,7 @@ GrapeSwaggerRails.options.app_name     = 'Pandore Api'
 GrapeSwaggerRails.options.api_key_name = 'token'
 GrapeSwaggerRails.options.api_key_type = 'query'
 
-GrapeSwaggerRails.options.before_filter do |request|
+GrapeSwaggerRails.options.before_action do |request|
   authenticate_or_request_with_http_basic do |username, password|
     username == 'pandore' && password == 'hei2017'
   end
