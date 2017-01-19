@@ -29,6 +29,14 @@ class Deal < ApplicationRecord
     end
   end
 
+  def loan_vouchers
+    vouchers.loan
+  end
+
+  def refund_vouchers
+    vouchers.refund
+  end
+
   def loan_expense_account
     User.find(credit_user_id).account
   end
