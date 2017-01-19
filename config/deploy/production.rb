@@ -54,3 +54,12 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+
+set :user, 'root'
+server '114.55.254.141', user: fetch(:user), roles: %w{web app db}
+
+set :rails_env, 'production'
+set :branch, 'master'
+
+
+

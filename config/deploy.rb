@@ -2,14 +2,16 @@
 # config valid only for current version of Capistrano
 lock '3.7.1'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'pandore'
+set :repo_url, 'git@github.com:helloshane/pandore.git'
 
 # Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+
+set :user, 'root'
 
 # Default deploy_to directory is /var/www/my_app_name
-# set :deploy_to, "/var/www/my_app_name"
+set :deploy_to, "/home/root/pandore"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -22,13 +24,48 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 # set :pty, true
 
 # Default value for :linked_files is []
-# append :linked_files, "config/database.yml", "config/secrets.yml"
+append :linked_files, "config/database.yml", "config/secrets.yml", "config/application.yml", "config/unicorn.example.rb"
 
 # Default value for linked_dirs is []
-# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
+set :rvm_ruby_version, '2.3.0'
+
+set :unicorn_config_path, -> { "#{current_path}/config/unicorn.rb" }
+
+set :unicorn_pid, -> { "#{current_path}/tmp/pids/unicorn.pid" }
+
+set :bundle_binstubs, false
+
+set :bundle_without, %w{development test}.join(' ')
+
+namespace :deploy do
+  desc 'Restart Application'
+  task :restart do
+    on roles(:app) do
+      invoke 'unicorn:restart'
+    end
+  end
+
+  after :publishing, :restart
+  after :publishing, "deploy:cleanup"
+
+  desc 'Copy config files'
+  task :config do
+    on roles(:app) do
+      execute "mkdir -p #{deploy_to}/shared/config"
+      upload! File.new('config/application.example.yml'), "#{deploy_to}/shared/config/application.yml"
+      upload! File.new('config/database.example.yml'), "#{deploy_to}/shared/config/database.yml"
+      upload! File.new('config/secrets.example.yml'), "#{deploy_to}/shared/config/secrets.yml"
+      upload! File.new('config/unicorn.example.rb'), "#{deploy_to}/shared/config/unicorn.rb"
+      info "Now edit the config files in #{shared_path}."
+    end
+  end
+
+end

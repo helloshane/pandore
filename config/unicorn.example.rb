@@ -8,7 +8,7 @@
 # See http://unicorn.bogomips.org/Unicorn/Configurator.html for complete
 # documentation.
 #
-app_path = ''
+app_path = '/home/root/pandore/current'
 
 worker_processes 2
 
