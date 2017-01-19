@@ -41,10 +41,12 @@ module V1
         user_ids = params.user_ids.split(/,\s*/)
         return raise_error(:illegal_parameters) unless user_ids.size == 2
 
-        users = User.where(id: user_id)
+        users = User.where(id: user_ids)
         return raise_error(:user_not_all_found) unless users.size == user_ids.size
 
-        present_ok(users, with: Entities::V1::DebtDetaiListEntity)
+        user_array = [users.last.id, users.first, users.first.id, users.last]
+
+        present_ok(Hash[*user_array], with: Entities::V1::DebtDetailEntity)
       end
     end # resource
   end

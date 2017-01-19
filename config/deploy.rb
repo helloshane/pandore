@@ -21,10 +21,10 @@ set :deploy_to, "/home/root/pandore"
 # set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
 
 # Default value for :pty is false
-# set :pty, true
+set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/database.yml", "config/secrets.yml", "config/application.yml", "config/unicorn.example.rb"
+append :linked_files, "config/database.yml", "config/secrets.yml", "config/application.yml", "config/unicorn.rb"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
@@ -34,14 +34,13 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
-
-set :rvm_ruby_version, '2.3.0'
+set :rvm_ruby_version, '2.3.0@pandore'
 
 set :unicorn_config_path, -> { "#{current_path}/config/unicorn.rb" }
 
 set :unicorn_pid, -> { "#{current_path}/tmp/pids/unicorn.pid" }
 
-set :bundle_binstubs, false
+# set :bundle_binstubs, false
 
 set :bundle_without, %w{development test}.join(' ')
 
@@ -55,17 +54,4 @@ namespace :deploy do
 
   after :publishing, :restart
   after :publishing, "deploy:cleanup"
-
-  desc 'Copy config files'
-  task :config do
-    on roles(:app) do
-      execute "mkdir -p #{deploy_to}/shared/config"
-      upload! File.new('config/application.example.yml'), "#{deploy_to}/shared/config/application.yml"
-      upload! File.new('config/database.example.yml'), "#{deploy_to}/shared/config/database.yml"
-      upload! File.new('config/secrets.example.yml'), "#{deploy_to}/shared/config/secrets.yml"
-      upload! File.new('config/unicorn.example.rb'), "#{deploy_to}/shared/config/unicorn.rb"
-      info "Now edit the config files in #{shared_path}."
-    end
-  end
-
 end
