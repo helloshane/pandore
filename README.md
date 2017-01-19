@@ -1,25 +1,37 @@
-# README
+pandore
+==========
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#### 设计思路
+----------
+1. 借款，还款看做一笔p2p交易(deal)不同阶段
 
-Things you may want to cover:
+2. 借款注册(loan_register)生成一笔交易记录(deal)以及一笔借款交易流水(voucher)
 
-* Ruby version
+3. 根据借款流水进行借款确认(confirm_loan), 完成借款操作
 
-* System dependencies
+4. 还款注册(refund_register)根据这笔交易记录(deal)生成一条还款交易流水
 
-* Configuration
+5. 根据还款流水进行还款确认(confirm_refund), 完成还款操作
 
-* Database creation
+6. 引入流水是为了跟踪钱的流转轨迹，目前借款和还款都是一笔完成。后面拆分完成也能满足需求
 
-* Database initialization
+7. 使用redis作为锁，防止并发
 
-* How to run the test suite
+#### 已完成功能
+----------
+1. 用户注册
+2. 借款操作
+3. 还款操作
+4. 查询账户及债务情况
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+### 存在问题
+----------
 
-* ...
+* 为了提高安全性，接口访问必须带token。token应该为动态的，而现在这种方式更多是模拟token的功能。
 
+* 简化了需求，借款和放款都以一次操作完成作为前提
+
+### 其他
+----------
+* [api文档](http://zkyonshane.cn/doc)
