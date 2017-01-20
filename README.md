@@ -34,4 +34,4 @@ pandore
 
 ### 其他
 ----------
-* [api文档](http://zkyonshane.cn/doc)
+* [api文档](http://zkyonshane.cn/doc)  认证用户名密码: pandore:hei2017
