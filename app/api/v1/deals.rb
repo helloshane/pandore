@@ -36,7 +36,7 @@ module V1
         requires :deal_code, type: String, desc: '借款交易号'
       end
       post :refund_register do
-        result = DealService.new.refund_register(@deal)
+        result = DealService.new.register_refund(@deal)
         return raise_error(result.error_id) unless result.success?
 
         present_ok(result.data, with: Entities::V1::DealEntity)

@@ -15,7 +15,10 @@ module ApiErrorHelpers
     no_enough_money: [50001, '余额不足'],
     create_loan_deal_fail: [50002, '借款交易创建失败'],
     creatr_refund_deal_fail: [50003, '还款交易创建失败'],  
-    confirm_deal_fail: [50004, '交易失败']
+    confirm_loan_fail: [50004, '借款交易确认失败'],
+    confirm_refund_fail: [50005, '还款交易确认失败'],
+
+    # confirm_deal_fail: [50004, '交易失败'],
   }
 
   ERRORS.each do |error, _|

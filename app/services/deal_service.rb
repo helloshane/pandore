@@ -19,7 +19,7 @@ class DealService
     service_success(deal)
   end
 
-  def refund_register(loan_deal)
+  def register_refund(loan_deal)
     return service_error(:illegal_loan_deal_status) unless loan_deal.may_convert_to_finish_refund?
 
     tran_result = Deal.transaction do

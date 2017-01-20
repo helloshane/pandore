@@ -16,11 +16,11 @@ describe DealService do
     end
   end
 
-  describe '#refund_register' do
+  describe '#register_refund' do
     let(:spec_deal) { create :deal }
 
     it 'when can not change to refund finish' do
-      result = DealService.new.refund_register(spec_deal)
+      result = DealService.new.register_refund(spec_deal)
       expect(result.success?).to be_falsey
       expect(result.error_id).to eq(:illegal_loan_deal_status)
     end
@@ -29,7 +29,7 @@ describe DealService do
       spec_deal.finish_loan!
       expect(spec_deal.refund_vouchers.size).to eq(0)
 
-      result = DealService.new.refund_register(spec_deal)
+      result = DealService.new.register_refund(spec_deal)
       expect(result.success?).to be_truthy
       expect(spec_deal.refund_vouchers.size).to eq(1)
     end
